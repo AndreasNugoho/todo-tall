@@ -17,6 +17,15 @@ class TodoList extends Component
 
     public $todo;
 
+    // public $todo2;
+    public $todo_id;
+    public $title;
+
+    // public function mount(){
+    //     $this->title = $this->todo->title;
+    // }
+
+
     public function render()
     {
         $id = Auth::user()->id;
@@ -33,15 +42,46 @@ class TodoList extends Component
         $this->dispatch('todoDelete');
     }
 
+    public function edit(Todo $todo){
+        $this->title = $todo->title;
+        $this->todo = $todo;
+        $this->todo_id = $todo->id;
+    }
+
+    public function update(){
+        $id = Auth::user()->id;
+
+
+        $this->validate([
+            'title' =>'required|string'
+        ]);
+
+        Todo::where('id',$this->todo_id)->update([
+            'title' => $this->title,
+            'user_id' => $id
+        ]);
+
+        $this->title = NULL;
+
+    }
+
     public function complete($id){
         $currentDateTime = new DateTime();
         $todo = Todo::find($id);
-        if($todo->complete == TRUE){
-            $todo->completed_at =  $currentDateTime->format('d-m-Y');
-        }else{
-            $todo->completed_at = NULL;
-        }
         $todo->completed = ! $todo ->completed;
+        if($todo->completed == TRUE){
+            // dd('harusnya ini bener');
+            Todo::where('id', $id)->update([
+                'completed_at' => $currentDateTime
+            ]);
+        }else{
+            // dd('harusnya ini salah');
+            Todo::where('id', $id)->update([
+                'completed_at' => NULL
+            ]);
+        }
+
+        // dd($todo);
         $todo->save();
         $this->dispatch('todoComplete');
     }
