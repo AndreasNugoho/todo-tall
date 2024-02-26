@@ -25,6 +25,7 @@
         <tbody>
             @foreach ($users as $user)
                 @php
+
                     $isi = $user->todos;
                     $jumlah_berhasil = [];
                     $jumlah_gagal = [];
@@ -50,9 +51,10 @@
                     </th>
                     <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                         {{ count($jumlah_gagal) }}
+                        {{-- {{ withCount($user->todos->completed) }} --}}
                     </th>
                     <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                        {{ count($user->todos) }}
+                        {{ $user->todos_count }}
                     </th>
                     {{-- <td class="px-6 py-4">
                     <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
