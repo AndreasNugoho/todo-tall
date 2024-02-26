@@ -1,14 +1,8 @@
 <div>
-
-
-    @livewire('todo.todo_pending')
-    <br>
-    <br>
-    <br>
     <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
         <h1
             class="font-extrabold leading-none tracking-tight text-center text-gray-900 mb-7 md:text-5xl dark:text-white">
-            Complete</h1>
+            On Progress</h1>
         <table class="w-full text-sm text-left text-gray-500 rtl:text-right dark:text-gray-400">
             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                 <tr>
@@ -31,7 +25,6 @@
             <tbody>
 
                 @foreach ($todos as $todo)
-                    {{-- {{ dd($todo->title) }} --}}
                     <tr>
                         <td class="px-6 py-4">
                             <input wire:click.prevent='complete({{ $todo->id }})' type="checkbox" id='todo'
@@ -70,6 +63,9 @@
                                 <button @click="modalOpen=true"
                                     class="inline-flex items-center justify-center h-10 px-4 py-2 text-sm font-medium transition-colors bg-white border rounded-md hover:bg-neutral-100 active:bg-white focus:bg-white focus:outline-none focus:ring-2 focus:ring-neutral-200/60 focus:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none"
                                     wire:click.prevent='edit({{ $todo }})'>Edit</button>
+                                {{-- <button @click="modalDelete=true"
+                                    class="inline-flex items-center justify-center h-10 px-4 py-2 text-sm font-medium transition-colors bg-white border rounded-md hover:bg-neutral-100 active:bg-white focus:bg-white focus:outline-none focus:ring-2 focus:ring-neutral-200/60 focus:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none"
+                                    wire:click.prevent='editDelete({{ $todo }})' id='delete'>Delete</button> --}}
                                 <template x-teleport="body">
                                     <div x-show="modalOpen"
                                         class="fixed top-0 left-0 z-[99] flex items-center justify-center w-screen h-screen"

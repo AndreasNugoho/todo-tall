@@ -4,32 +4,35 @@ namespace App\Livewire\Todo;
 
 use App\Models\Todo;
 use DateTime;
-use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Date;
 use Livewire\Component;
 
-class TodoList extends Component
+class TodoPending extends Component
 {
-    protected $listeners = [
-        'todoComplete' => 'render',
-        'todoStore' => 'render',
-        'todoDelete' => 'render',
-        'todoUpdate' => 'render',
+
+     protected $listeners = [
+        'todoComplete' => 'mount',
+        'todoUpdate' => 'mount',
+        'todoDelete' => 'mount',
+        'todoStore' => 'mount',
     ];
+    public $todos;
+
     public $todo;
     public $todo_id;
     public $title;
 
+     public function mount() {
+        $this->todos = Todo::all();
+        $this->todos = $this->todos->filter( function($todos) {
+            return  ! $todos->completed;
+        });
+    }
 
-    public function render()
-    {
-        $id = Auth::user()->id;
-        return view('livewire.todo.todo-list',[
-            'todos' => Todo::where('user_id', $id)->orderBy('id','desc')->get(),
-            'onProgress' =>Todo::where('user_id', $id)->where('completed',FALSE)->orderBy('id','desc')->get(),
-        ]);
-
+     public function edit(Todo $todo){
+        $this->title = $todo->title;
+        $this->todo = $todo;
+        $this->todo_id = $todo->id;
     }
 
     public function delete($id)
@@ -38,12 +41,6 @@ class TodoList extends Component
         $todo->delete();
         session()->flash('success', 'todo berhasil dihapus');
         $this->dispatch('todoDelete');
-    }
-
-    public function edit(Todo $todo){
-        $this->title = $todo->title;
-        $this->todo = $todo;
-        $this->todo_id = $todo->id;
     }
 
     public function update(){
@@ -66,7 +63,7 @@ class TodoList extends Component
 
     }
 
-    public function complete($id){
+     public function complete($id){
         $currentDateTime = new DateTime();
         $todo = Todo::find($id);
         $todo->completed = ! $todo ->completed;
@@ -82,11 +79,14 @@ class TodoList extends Component
             ]);
         }
 
-        // dd($todo);
         $todo->save();
         $this->dispatch('todoComplete');
     }
 
 
 
+    public function render()
+    {
+        return view('livewire.todo.todo-pending');
+    }
 }
