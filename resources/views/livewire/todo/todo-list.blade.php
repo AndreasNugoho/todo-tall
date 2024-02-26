@@ -54,15 +54,15 @@
                             @endif
 
                         </td>
-                        <td class="px-6 py-4">
-                            <div x-data="{ modalOpen: false, modalDelete: false }" @keydown.escape.window="modalOpen = false"
+                        <td class="inline-flex px-6 py-4">
+                            <div x-data="{ modalOpen: false }" @keydown.escape.window="modalOpen = false"
                                 :class="{ 'z-40': modalOpen, 'z-40': modalDelete }" class="relative w-auto h-auto">
                                 <button @click="modalOpen=true"
                                     class="inline-flex items-center justify-center h-10 px-4 py-2 text-sm font-medium transition-colors bg-white border rounded-md hover:bg-neutral-100 active:bg-white focus:bg-white focus:outline-none focus:ring-2 focus:ring-neutral-200/60 focus:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none"
                                     wire:click.prevent='edit({{ $todo }})'>Edit</button>
-                                <button @click="modalDelete=true"
+                                {{-- <button @click="modalDelete=true"
                                     class="inline-flex items-center justify-center h-10 px-4 py-2 text-sm font-medium transition-colors bg-white border rounded-md hover:bg-neutral-100 active:bg-white focus:bg-white focus:outline-none focus:ring-2 focus:ring-neutral-200/60 focus:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none"
-                                    wire:click.prevent='edit({{ $todo }})' id='delete'>Delete</button>
+                                    wire:click.prevent='editDelete({{ $todo }})' id='delete'>Delete</button> --}}
                                 <template x-teleport="body">
                                     <div x-show="modalOpen"
                                         class="fixed top-0 left-0 z-[99] flex items-center justify-center w-screen h-screen"
@@ -117,6 +117,12 @@
                                         </div>
                                         {{-- Batas --}}
                                 </template>
+
+                            </div>
+                            <div x-data="{ modalDelete: false }" @keydown.escape.window="modalDelete = false"
+                                :class="{ 'z-40': modalDelete }" class="relative w-auto h-auto">
+                                <button @click="modalDelete=true"
+                                    class="inline-flex items-center justify-center h-10 px-4 py-2 text-sm font-medium transition-colors bg-white border rounded-md hover:bg-neutral-100 active:bg-white focus:bg-white focus:outline-none focus:ring-2 focus:ring-neutral-200/60 focus:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none">Delete</button>
                                 <template x-teleport="body">
                                     <div x-show="modalDelete"
                                         class="fixed top-0 left-0 z-[99] flex items-center justify-center w-screen h-screen"

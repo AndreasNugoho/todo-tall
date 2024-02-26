@@ -12,14 +12,16 @@ class TodoList extends Component
 {
     protected $listeners = [
         'todoStore' => 'render',
-        'todoComplete' => 'render'
+        'todoComplete' => 'render',
+        'todoDelete' => 'render',
     ];
 
     public $todo;
-
-    // public $todo2;
     public $todo_id;
     public $title;
+    public $todo_delete;
+    public $todo_id_delete;
+    public $title_delete;
 
     // public function mount(){
     //     $this->title = $this->todo->title;
@@ -46,6 +48,11 @@ class TodoList extends Component
         $this->title = $todo->title;
         $this->todo = $todo;
         $this->todo_id = $todo->id;
+    }
+    public function editDelete(Todo $todo){
+        $this->title_delete = $todo->title;
+        $this->todo_delete = $todo;
+        $this->todo_id_delete = $todo->id;
     }
 
     public function update(){
