@@ -23,7 +23,8 @@ class TodoPending extends Component
     public $title;
 
      public function mount() {
-        $this->todos = Todo::all();
+        $id = Auth::user()->id;
+        $this->todos = Todo::where('user_id', $id)->orderBy('id','desc')->get();
         $this->todos = $this->todos->filter( function($todos) {
             return  ! $todos->completed;
         });
