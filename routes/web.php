@@ -62,7 +62,7 @@ Route::middleware('auth')->group(function () {
         return view('todo.index');
     })->name('todo.index');
 
-    Route::get('/todo/{id}/edit', [TodoController::class, 'edit'])->name('todo.edit');
+    // Route::get('/todo/{id}/edit', [TodoController::class, 'edit'])->name('todo.edit');
 });
 require __DIR__ . '/auth.php';
 Route::middleware(['auth', 'roles:admin'])->group(function () {

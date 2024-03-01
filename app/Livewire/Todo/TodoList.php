@@ -28,6 +28,8 @@ class TodoList extends Component
 
     }
 
+   
+
     public function delete($id)
     {
         $todo = Todo::find($id);
@@ -37,6 +39,7 @@ class TodoList extends Component
     }
 
     public function edit(Todo $todo){
+        // dd($todo);
         $this->title = $todo->title;
         $this->todo = $todo;
         $this->todo_id = $todo->id;
