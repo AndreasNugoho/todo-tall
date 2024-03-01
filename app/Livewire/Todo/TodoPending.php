@@ -46,7 +46,7 @@ class TodoPending extends Component
         $id = Auth::user()->id;
         $dateNya = $this->dateFilter;
         $dateToNya = $this->dateFilterTo;
-        $this->todos = Todo::where('user_id', $id)->orderBy('id','desc')->get();
+        $this->todos = Todo::where('user_id', $id)->orderBy('due_at','asc')->get();
         $this->todos = $this->todos->filter( function($todos) {
             return  ! $todos->completed;
         });
@@ -63,7 +63,10 @@ class TodoPending extends Component
                 // dd(gettype($dateNya));
                 // dd($convertDue);
                 $cekTodo = Todo::where('user_id', $id);
-                $this->todos = $cekTodo->whereDate('due_at','>=',$dateNya)->whereDate('due_at','<=',$dateToNya)->get();
+                $this->todos = $cekTodo->whereDate('due_at','>=',$dateNya)->whereDate('due_at','<=',$dateToNya)->orderBy('due_at','asc')->get();
+                $this->todos = $this->todos->filter( function($todos) {
+                    return  ! $todos->completed;
+                });
                 // dd($this->todos);
                 // return view('livewire.todo.todo-pending');
 
