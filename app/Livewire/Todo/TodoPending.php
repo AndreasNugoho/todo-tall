@@ -17,6 +17,8 @@ class TodoPending extends Component
         'todoDelete' => 'mount',
         'todoStore' => 'mount',
         'filterDate' => 'mount',
+        'filterDateTo' => 'mount',
+        'resetDate' => 'mount',
     ];
     public $todos;
 
@@ -25,6 +27,7 @@ class TodoPending extends Component
     public $title;
 
     public $dateFilter;
+    public $dateFilterTo;
 
     public $search;
 
@@ -42,6 +45,7 @@ class TodoPending extends Component
      public function mount() {
         $id = Auth::user()->id;
         $dateNya = $this->dateFilter;
+        $dateToNya = $this->dateFilterTo;
         $this->todos = Todo::where('user_id', $id)->orderBy('id','desc')->get();
         $this->todos = $this->todos->filter( function($todos) {
             return  ! $todos->completed;
@@ -53,24 +57,40 @@ class TodoPending extends Component
             $convertCreated = date_format($item->created_at,"Y-m-d");
             // dd($dataNyaConvert);
 
-             if($dateNya != '') {
-                $convertDataNya = date_format($dateNya,"Y-m-d");
-                $this->todos = Todo::where('user_id',$id)->where('due_at','like','%'.$convertDataNya.'%')->orderBy('id','desc')->get();
-                    $this->todos = $this->todos->filter( function($todos) {
-                        return  ! $todos->completed;
-                    });
-            }else{
+            if($dateNya != '' AND $dateToNya != ''){
+                // dd($dateNya, $dateToNya);
+                $convertDue = new Carbon($item->due_at);
+                // dd(gettype($dateNya));
+                // dd($convertDue);
+                $cekTodo = Todo::where('user_id', $id);
+                $this->todos = $cekTodo->whereDate('due_at','>=',$dateNya)->whereDate('due_at','<=',$dateToNya)->get();
+                // dd($this->todos);
+                // return view('livewire.todo.todo-pending');
+
 
             }
+
+            //  if($dateNya != '') {
+            //     $convertDataNya = date_format($dateNya,"Y-m-d");
+            //     $this->todos = Todo::where('user_id',$id)->where('due_at','like','%'.$convertDataNya.'%')->orderBy('id','desc')->get();
+            //         $this->todos = $this->todos->filter( function($todos) {
+            //             return  ! $todos->completed;
+            //         });
+            // }elseif($dateNya == '') {
+            //     $this->todos = $this->todos->filter( function($todos) {
+            //         return  ! $todos->completed;
+            //     });
+            // }
+            // dd($dateNya,$dateToNya);
+
+
+
             $dueDateTodo = $item->due_at;
             $this->changeFormatDueDate = $dueDateTodo->format('Y-m-d');
             $this->hariIni = Carbon::now()->format('Y-m-d');
             $cekDueDate =Todo::whereDate($this->hariIni,'>',$this->changeFormatDueDate)->orderBy('due_at','asc');
-            // dd($cekOverDue);
-            // $this->cekDueDate = $cekOverDue;
 
         }
-        // $this->cekDueDate = Todo::where('user_id', $id)->whereDate($this->hariIni,$this->changeFormatDueDate);
 
 
     }
@@ -79,6 +99,18 @@ class TodoPending extends Component
         $strDate = $day.$month.$year;
         $this->dateFilter = new Carbon($strDate);
         $this->dispatch('filterDate');
+    }
+
+    public function filterDateTo($day, $month, $year){
+        $strDate = $day.$month.$year;
+        $this->dateFilterTo = new Carbon($strDate);
+        // dd($this->dateFilterTo);
+        $this->dispatch('filterDateTo');
+    }
+    public function resetDate(){
+        $this->dateFilter = '';
+        $this->dateFilterTo = '';
+        $this->dispatch('resetDate');
     }
 
      public function edit(Todo $todo){
@@ -149,14 +181,14 @@ class TodoPending extends Component
         $today = Carbon::now();
         $due = new Carbon($formatDate);
         // dd($today, $due);
-
-        if($today > $due){
-            $diff =$today->diffInDays($formatDate,false);
+        $diff =$today->diffInDays($formatDate,false);
+        if($diff < 0){
             return "Overdue". " ".abs($diff)." "."days";
+        }elseif($diff == 0 ){
+            return "Overdue Today";
         }else{
             return "On Duty";
         }
-
     }
 
 
