@@ -15,11 +15,12 @@
         }
     </style>
 
-    <div
-        class="relative min-h-screen bg-gray-100 bg-center sm:flex sm:justify-center sm:items-center bg-dots dark:bg-gray-900 selection:bg-indigo-500 selection:text-white">
+    <div class="">
 
         @livewire('welcome.header');
 
-        @livewire('welcome.content');
+        <div class="flex items-center">
+            @livewire('welcome.content');
+        </div>
     </div>
 @endsection
