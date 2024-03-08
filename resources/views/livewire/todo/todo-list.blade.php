@@ -1,4 +1,4 @@
-<div>
+<div class="">
 
 
     @livewire('todo.todo_pending')
