@@ -63,16 +63,17 @@ class TodoComplete extends Component
 
     }
 
-     public function complete($id){
+    public function complete($id)
+    {
         $currentDateTime = new DateTime();
         $todo = Todo::find($id);
-        $todo->completed = ! $todo ->completed;
-        if($todo->completed == TRUE){
+        $todo->completed = !$todo->completed;
+        if ($todo->completed == TRUE) {
             // dd('harusnya ini bener');
             Todo::where('id', $id)->update([
                 'completed_at' => $currentDateTime
             ]);
-        }else{
+        } else {
             // dd('harusnya ini salah');
             Todo::where('id', $id)->update([
                 'completed_at' => NULL
