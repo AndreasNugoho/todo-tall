@@ -12,6 +12,7 @@
 
 
 
+
             @foreach ($todos as $todo)
                 <div class="rounded">
                     <a href="" wire:click.prevent='complete({{ $todo->id }})' x-data
@@ -25,6 +26,22 @@
                                 </h3>
                             </div>
                             <div>
+                                <div class="mb-3 flex items-center">
+                                    <div class="border border-gray-300 dark:border-gray-700 rounded-full px-3 py-1 dark:text-red-400 text-red-600 text-xs flex items-center"
+                                        aria-label="due on" role="contentinfo">
+                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                            class="icon icon-tabler icon-tabler-checks" width="24" height="24"
+                                            viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none"
+                                            stroke-linecap="round" stroke-linejoin="round">
+                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                            <path d="M7 12l5 5l10 -10" />
+                                            <path d="M2 12l5 5m5 -5l5 -5" />
+                                        </svg>
+                                        <p class="ml-2 dark:text-gray-400 ">
+                                            Completed
+                                        </p>
+                                    </div>
+                                </div>
 
                                 <div class="flex items-center justify-between text-gray-800 dark:text-gray-100">
                                     <p class="text-sm">{{ $todo->due_at->format('F j, Y') }}</p>
