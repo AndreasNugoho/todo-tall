@@ -510,6 +510,8 @@
         </li>
         @endforeach
     </ul> --}}
+    <link rel="stylesheet" href="https://unpkg.com/tippy.js@6/dist/tippy.css" />
+
     <div class="mx-auto container py-20 px-6">
         <h1
             class="font-extrabold leading-none tracking-tight text-center text-gray-900 mb-5 md:text-5xl dark:text-white ">
@@ -521,7 +523,8 @@
 
             @foreach ($todos as $todo)
                 <div class="rounded">
-                    <a href="" wire:click.prevent='complete({{ $todo->id }})'>
+                    <a href="" wire:click.prevent='complete({{ $todo->id }})' x-data
+                        x-tooltip.raw="Click Me To Completed Task !!">
 
                         <div
                             class="w-full h-44 flex flex-col justify-between dark:bg-gray-800 bg-white dark:border-gray-700 rounded-lg border border-gray-400 mb-6 py-5 px-4">
@@ -690,6 +693,7 @@
         </div>
     </div>
 </div>
+
 
 
 {{-- <div class="rounded">
@@ -895,6 +899,7 @@
                     </div>
                 </div> --}}
 @endforeach
+
 </div>
 </div>
 </div>
