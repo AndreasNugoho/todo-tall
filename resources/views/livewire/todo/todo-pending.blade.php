@@ -8,7 +8,7 @@
             On Progress</h1>
 
         {{-- Date --}}
-        <div class="inline-flex">
+        <div class="inline-flex py-10">
             <div x-data="{
                 datePickerOpen: false,
                 datePickerValue: '',
