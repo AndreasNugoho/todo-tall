@@ -39,6 +39,8 @@ class TodoPending extends Component
 
     public $cekDueDate;
 
+    public $selisih;
+
 
 
 
@@ -185,6 +187,7 @@ class TodoPending extends Component
         $due = new Carbon($formatDate);
         // dd($today, $due);
         $diff =$today->diffInDays($formatDate,false);
+        $this->selisih = $diff;
         // return $diff;
         if($diff < 0){
             return "Overdue". " ".abs($diff)." "."days";
@@ -192,6 +195,17 @@ class TodoPending extends Component
             return "Overdue Today";
         }else{
             return "On Duty";
+        }
+    }
+
+    public function color(){
+
+        if (abs($this->selisih) > 0) {
+            return "white";
+        } elseif (abs($this->selisih) == 0) {
+            return "pink";
+        }else{
+            return "yellow";
         }
     }
 
