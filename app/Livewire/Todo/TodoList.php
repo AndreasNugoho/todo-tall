@@ -8,6 +8,7 @@ use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Date;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class TodoList extends Component
 {
@@ -21,6 +22,9 @@ class TodoList extends Component
     public $todo_id;
     public $title;
 
+    use WithPagination;
+
+
 
     public function render()
     {
@@ -28,7 +32,7 @@ class TodoList extends Component
 
     }
 
-   
+
 
     public function delete($id)
     {

@@ -6,6 +6,7 @@ use App\Models\Todo;
 use DateTime;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class TodoComplete extends Component
 {
@@ -20,6 +21,7 @@ class TodoComplete extends Component
     public $todo;
     public $todo_id;
     public $title;
+
 
     public function mount() {
         $id = Auth::user()->id;

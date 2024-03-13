@@ -7,6 +7,7 @@ use Carbon\Carbon;
 use DateTime;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class TodoPending extends Component
 {
@@ -40,6 +41,13 @@ class TodoPending extends Component
     public $cekDueDate;
 
     public $selisih;
+
+    use WithPagination;
+
+    protected $paginationTheme = 'tailwind';
+
+    public $cari = '';
+
 
 
 
@@ -94,7 +102,9 @@ class TodoPending extends Component
             $this->changeFormatDueDate = $dueDateTodo->format('Y-m-d');
             $this->hariIni = Carbon::now()->format('Y-m-d');
             $cekDueDate =Todo::whereDate($this->hariIni,'>',$this->changeFormatDueDate)->orderBy('due_at','asc');
-
+            // if($this->cari !== ''){
+            //     dd('jalan');
+            // }
         }
 
 
@@ -130,8 +140,16 @@ class TodoPending extends Component
         $todo = Todo::find($id);
         // dd($todo);
         $todo->delete();
-        session()->flash('success', 'todo berhasil dihapus');
+        // session()->flash('success', 'todo berhasil dihapus');
         $this->dispatch('todoDelete');
+    }
+
+    public function cariData($cari){
+        if($cari !== ''){
+            dd('jalan');
+        }else{
+            dd('gak jalan');
+        }
     }
 
     public function update(){
@@ -214,7 +232,9 @@ class TodoPending extends Component
     public function render()
     {
         // $this->overDue($today,$due_at);
-        return view('livewire.todo.todo-pending');
+        return view('livewire.todo.todo-pending',[
+            'todonya' => Todo::orderBy('due_at','asc')->paginate(8)
+        ]);
     }
 
 }

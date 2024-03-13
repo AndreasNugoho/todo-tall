@@ -8,7 +8,7 @@
             On Progress</h1>
 
         {{-- Date --}}
-        <div class="inline-flex py-10 border border-black">
+        <div class="inline-flex py-10">
             <div x-data="{
                 datePickerOpen: false,
                 datePickerValue: '',
@@ -382,8 +382,9 @@
                 </svg>
             </span>
 
-            <input type="text" placeholder="Search"
-                class="block w-full py-1.5 pr-5 text-gray-700 bg-white border border-gray-200 rounded-lg md:w-80 placeholder-gray-400/70 pl-11 rtl:pr-11 rtl:pl-5 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40">
+            <input type="text" placeholder="Tes"
+                class="block w-full py-1.5 pr-5 text-gray-700 bg-white border border-gray-200 rounded-lg md:w-80 placeholder-gray-400/70 pl-11 rtl:pr-11 rtl:pl-5 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40"
+                wire:model.live="cari">
         </div>
 
 
@@ -391,34 +392,11 @@
 
 
         <div class="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {{-- <div
-                class="w-full h-64 flex flex-col justify-between bg-yellow-400 rounded-lg border border-yellow-400 mb-6 py-5 px-4">
-                <div>
-                    <h4 class="text-gray-800 font-bold mb-3">13 things to work on</h4>
-                    <p class="text-gray-800 text-sm">Our interior design experts work with you to create the space that
-                        you have been dreaming about.</p>
-                </div>
-                <div>
-                    <div class="flex items-center justify-between text-gray-800">
-                        <p class="text-sm">March 28, 2020</p>
-                        <button
-                            class="w-8 h-8 rounded-full bg-gray-800 text-white flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-offset-2 ring-offset-yellow-400  focus:ring-black"
-                            aria-label="edit note" role="button">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-pencil"
-                                width="20" height="20" viewBox="0 0 24 24" stroke-width="1.5"
-                                stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                <path stroke="none" d="M0 0h24v24H0z"></path>
-                                <path d="M4 20h4l10.5 -10.5a1.5 1.5 0 0 0 -4 -4l-10.5 10.5v4"></path>
-                                <line x1="13.5" y1="6.5" x2="17.5" y2="10.5"></line>
-                            </svg>
-                        </button>
-                    </div>
-                </div>
-            </div> --}}
 
 
 
-            @foreach ($todos as $todo)
+
+            @foreach ($todonya as $todo)
                 <div class="rounded">
                     <a href="" wire:click.prevent='complete({{ $todo->id }})' x-data
                         x-tooltip.raw="Click Me To Completed Task !!">
@@ -600,5 +578,6 @@
 @endforeach
 
 </div>
+{{ $todonya->links() }}
 </div>
 </div>
