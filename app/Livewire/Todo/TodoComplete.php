@@ -22,6 +22,11 @@ class TodoComplete extends Component
     public $todo_id;
     public $title;
 
+    use WithPagination;
+
+    protected $paginationTheme = 'tailwind';
+
+
 
     public function mount() {
         $id = Auth::user()->id;

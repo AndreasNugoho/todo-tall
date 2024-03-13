@@ -232,8 +232,10 @@ class TodoPending extends Component
     public function render()
     {
         // $this->overDue($today,$due_at);
+        $coba = $this->todos;
+        $id = Auth::user()->id;
         return view('livewire.todo.todo-pending',[
-            'todonya' => Todo::orderBy('due_at','asc')->paginate(8)
+            'todonya' => Todo::where('user_id',$id)->where('completed',FALSE)->paginate(4),
         ]);
     }
 
