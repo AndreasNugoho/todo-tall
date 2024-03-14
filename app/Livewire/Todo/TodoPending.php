@@ -46,17 +46,16 @@ class TodoPending extends Component
 
     protected $paginationTheme = 'tailwind';
 
-    public $cari = '';
 
-
-
+    public $cari;
 
 
      public function mount() {
         $id = Auth::user()->id;
         $dateNya = $this->dateFilter;
         $dateToNya = $this->dateFilterTo;
-        $this->todos = Todo::where('user_id', $id)->orderBy('due_at','asc')->get();
+
+        $this->todos = Todo::where('user_id', $id)->where('completed', FALSE)->paginate(4);
         $this->todos = $this->todos->filter( function($todos) {
             return  ! $todos->completed;
         });
@@ -73,7 +72,7 @@ class TodoPending extends Component
                 // dd(gettype($dateNya));
                 // dd($convertDue);
                 $cekTodo = Todo::where('user_id', $id);
-                $this->todos = $cekTodo->whereDate('due_at','>=',$dateNya)->whereDate('due_at','<=',$dateToNya)->orderBy('due_at','asc')->get();
+                $this->todos = $cekTodo->whereDate('due_at','>=',$dateNya)->whereDate('due_at','<=',$dateToNya)->where('completed',FALSE)->paginate(4);
                 $this->todos = $this->todos->filter( function($todos) {
                     return  ! $todos->completed;
                 });
@@ -232,11 +231,26 @@ class TodoPending extends Component
     public function render()
     {
         // $this->overDue($today,$due_at);
-        $coba = $this->todos;
+        $tes = $this->todos;
         $id = Auth::user()->id;
-        return view('livewire.todo.todo-pending',[
-            'todonya' => Todo::where('user_id',$id)->where('completed',FALSE)->paginate(4),
+
+
+        if($this->dateFilter !== NULL AND $this->dateFilterTo !== NULL){
+            return view('livewire.todo.todo-pending',[
+            'todonya' => Todo::where('user_id', $id)->whereDate('due_at','>=',$this->dateFilter)->whereDate('due_at','<=',$this->dateFilterTo)->where('completed',FALSE)->where('completed',FALSE)->paginate(4)
         ]);
+        }elseif(!$this->cari){
+            return view('livewire.todo.todo-pending',[
+                'todonya' => Todo::where('user_id', $id)->where('completed',FALSE)->where('title', 'like', '%'.$this->cari.'%')->paginate(4)
+            ]);
+            // dd('jalan');
+        }else{
+            return view('livewire.todo.todo-pending',[
+                'todonya' => Todo::where('user_id', $id)->where('completed',FALSE)->paginate(4)
+            ]);
+        }
+
+
     }
 
 }

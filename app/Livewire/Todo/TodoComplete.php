@@ -93,6 +93,9 @@ class TodoComplete extends Component
 
     public function render()
     {
-        return view('livewire.todo.todo-complete');
+        $id = Auth::user()->id;
+        return view('livewire.todo.todo-complete',[
+            'todonya' => Todo::where('user_id',$id)->where('completed',TRUE)->paginate(4),
+        ]);
     }
 }

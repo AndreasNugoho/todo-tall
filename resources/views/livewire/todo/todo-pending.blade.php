@@ -8,7 +8,7 @@
             On Progress</h1>
 
         {{-- Date --}}
-        <div class="inline-flex py-10">
+        <div class="flex flex-col sm:w-[50%] mx-auto justify-center items-center sm:flex-row gap-2">
             <div x-data="{
                 datePickerOpen: false,
                 datePickerValue: '',
@@ -152,7 +152,7 @@
                                         </button>
                                     </div>
                                 </div>
-                                <div class="grid grid-cols-7 mb-3">
+                                <div class="grid grid-cols-7">
                                     <template x-for="(day, index) in datePickerDays" :key="index">
                                         <div class="px-0.5">
                                             <div x-text="day" class="text-xs font-medium text-center text-gray-800">
@@ -187,7 +187,7 @@
                     </div>
                 </div>
             </div>
-            <p class="relative top-[40px] left-2">To</p>
+            <p class="">To</p>
             <div x-data="{
                 datePickerOpen: false,
                 datePickerValue: '',
@@ -368,23 +368,24 @@
             </div>
 
         </div>
-        <button type="button"
-            class="relative inline-flex items-center justify-center px-4 py-2 text-sm font-medium tracking-wide text-white transition-colors duration-200 rounded-md top-[34px] bg-neutral-950 hover:bg-neutral-900 focus:ring-2 focus:ring-offset-2 focus:ring-neutral-900 focus:shadow-outline focus:outline-none"
-            wire:click="resetDate()">
-            Reset
-        </button>
-        <div class="inline-flex items-center relative">
-            <span class="absolute">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                    stroke="currentColor" class="w-5 h-5 mx-3 text-gray-400 dark:text-gray-600">
-                    <path stroke-linecap="round" stroke-linejoin="round"
-                        d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
-                </svg>
-            </span>
+        <div class="flex flex-col w-[80%] mb-10 sm:w-[40%] mx-auto gap-5">
+            <button type="button"
+                class="px-4 py-2 text-sm w-[30%] lg:w-[20%] font-medium tracking-wide text-white transition-colors duration-200 rounded-md top-[34px] bg-neutral-950 hover:bg-neutral-900 focus:ring-2 focus:ring-offset-2 focus:ring-neutral-900 focus:shadow-outline focus:outline-none"
+                wire:click="resetDate()">
+                Reset
+            </button>
+            <div class="inline-flex items-center relative">
+                <span class="absolute">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="currentColor" class="w-5 h-5 mx-3 text-gray-400 dark:text-gray-600">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+                    </svg>
+                </span>
 
-            <input type="text" placeholder="Tes"
-                class="block w-full py-1.5 pr-5 text-gray-700 bg-white border border-gray-200 rounded-lg md:w-80 placeholder-gray-400/70 pl-11 rtl:pr-11 rtl:pl-5 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40"
-                wire:model.live="cari">
+                <input wire:model.live="cari" type="search" placeholder="Tes"
+                    class="block w-full py-1.5 pr-5 text-gray-700 bg-white border border-gray-200 rounded-lg placeholder-gray-400/70 pl-11 rtl:pr-11 rtl:pl-5 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40">
+            </div>
         </div>
 
 
