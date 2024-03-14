@@ -47,7 +47,7 @@ class TodoPending extends Component
     protected $paginationTheme = 'tailwind';
 
 
-    public $cari;
+    public $cari = '';
 
 
      public function mount() {
@@ -239,11 +239,10 @@ class TodoPending extends Component
             return view('livewire.todo.todo-pending',[
             'todonya' => Todo::where('user_id', $id)->whereDate('due_at','>=',$this->dateFilter)->whereDate('due_at','<=',$this->dateFilterTo)->where('completed',FALSE)->where('completed',FALSE)->paginate(4)
         ]);
-        }elseif(!$this->cari){
+        }elseif($this->cari !== ''){
             return view('livewire.todo.todo-pending',[
                 'todonya' => Todo::where('user_id', $id)->where('completed',FALSE)->where('title', 'like', '%'.$this->cari.'%')->paginate(4)
             ]);
-            // dd('jalan');
         }else{
             return view('livewire.todo.todo-pending',[
                 'todonya' => Todo::where('user_id', $id)->where('completed',FALSE)->paginate(4)
