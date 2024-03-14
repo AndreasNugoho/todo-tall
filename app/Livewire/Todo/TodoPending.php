@@ -237,15 +237,15 @@ class TodoPending extends Component
 
         if($this->dateFilter !== NULL AND $this->dateFilterTo !== NULL){
             return view('livewire.todo.todo-pending',[
-            'todonya' => Todo::where('user_id', $id)->whereDate('due_at','>=',$this->dateFilter)->whereDate('due_at','<=',$this->dateFilterTo)->where('completed',FALSE)->where('completed',FALSE)->paginate(4)
+            'todonya' => Todo::where('user_id', $id)->whereDate('due_at','>=',$this->dateFilter)->whereDate('due_at','<=',$this->dateFilterTo)->where('completed',FALSE)->where('completed',FALSE)->paginate(8)
         ]);
         }elseif($this->cari !== ''){
             return view('livewire.todo.todo-pending',[
-                'todonya' => Todo::where('user_id', $id)->where('completed',FALSE)->where('title', 'like', '%'.$this->cari.'%')->paginate(4)
+                'todonya' => Todo::where('user_id', $id)->where('completed',FALSE)->where('title', 'like', '%'.$this->cari.'%')->paginate(8)
             ]);
         }else{
             return view('livewire.todo.todo-pending',[
-                'todonya' => Todo::where('user_id', $id)->where('completed',FALSE)->paginate(4)
+                'todonya' => Todo::where('user_id', $id)->where('completed',FALSE)->orderBy('due_at','asc')->paginate(8)
             ]);
         }
 
